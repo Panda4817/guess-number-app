@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../constants/colors';
+import BodyText from './BodyText'
 
 const NumberBox = props => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.number}>{props.children}</Text>
+            <BodyText style={styles.number}>{props.children}</BodyText>
         </View>
     );
 };

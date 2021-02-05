@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { View, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Card from '../components/Card';
 import Input from '../components/Input';
 import Colors from '../constants/colors';
 import NumberBox from '../components/NumberBox';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
+
 const StartGameScreen = props => {
     const [value, setValue] = useState("");
     const [confirmed, setConfirmed] = useState(false);
@@ -21,31 +25,31 @@ const StartGameScreen = props => {
     const confirmInputHandler = () => {
         const chosen = parseInt(value);
         if (isNaN(chosen) || chosen <= 0 || chosen > 99){
-            Alert.alert('Invalid Number!', ' Number has to be between 1 and 99', [{text: 'Okay', style: 'destructive', onPress: resetInputHandler}])
+            Alert.alert('Invalid Number!', ' Number has to be between 1 and 99', [{BodyText: 'Okay', style: 'destructive', onPress: resetInputHandler}])
             return;
         }
         setConfirmed(true);
         setNumber(chosen);
         setValue("");
-        Keyboard.dismiss;
+        Keyboard.dismiss();
     }
 
     let confirmedOutput;
     if (confirmed){
         confirmedOutput =  (
             <Card style={styles.summary}>
-                <Text>You selected</Text>
+                <BodyText>You selected</BodyText>
                 <NumberBox>{number}</NumberBox>
-                <Button title="START GAME" />
+                <MainButton onPress={() => props.onStart(number)}>START GAME</MainButton>
             </Card> 
         )
     }
     return (
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
         <View style={styles.screen}>
-            <Text style={styles.title}>Start a New Game!</Text>
+            <TitleText style={styles.title}>Start a New Game!</TitleText>
             <Card style={styles.inputContainer}>
-                <Text>Select a Number</Text>
+                <BodyText>Select a Number</BodyText>
                 <Input 
                     style={styles.input}
                     blurOnSubmit={true}
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 30,
-        marginVertical: 10,
+        marginVertical: 10
     },
     inputContainer: {
         width: 300,
